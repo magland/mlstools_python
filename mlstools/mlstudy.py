@@ -52,10 +52,10 @@ def loadFile(obj):
         return req.content
 
 def loadTextFile(obj):
-    return MLUtils.loadFile(obj).decode('utf-8')
+    return loadFile(obj).decode('utf-8')
 
 def loadJsonFile(obj):
-    return json.loads(MLUtils.loadTextFile(obj))
-    
+    return json.loads(loadTextFile(obj))
+
 def loadMdaFile(obj):
-    return mdaio.mda_from_bytes(MLUtils.loadFile(obj))
+    return mdaio.mda_from_bytes(loadFile(obj))
