@@ -62,7 +62,7 @@ def _load_file_from_checksum(checksum):
             _download_to_file(url,file_path)
         with open(file_path, "rb") as binary_file:
             return binary_file.read()
-    else
+    else:
         req=requests.get(url)
         return req.content
 
