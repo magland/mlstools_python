@@ -45,15 +45,17 @@ class MLStudy:
     def datasetIds(self):
         return self._study['datasets'].keys()
 
-class MLUtils:    
-    def load(obj):
-        if 'prv' in obj:
-            url='https://kbucket.flatironinstitute.org/download/'+obj['prv']['original_checksum']
-            req=requests.get(url)
-            return req.content
-    def loadText(obj):
-        return MLUtils.load(obj).decode('utf-8')
-    def loadJson(obj):
-        return json.loads(MLUtils.loadText(obj))
-    def loadMda(obj):
-        return mdaio.mda_from_bytes(MLUtils.load(obj))
+def loadFile(obj):
+    if 'prv' in obj:
+        url='https://kbucket.flatironinstitute.org/download/'+obj['prv']['original_checksum']
+        req=requests.get(url)
+        return req.content
+
+def loadTextFile(obj):
+    return MLUtils.loadFile(obj).decode('utf-8')
+
+def loadJsonFile(obj):
+    return json.loads(MLUtils.loadTextFile(obj))
+    
+def loadMdaFile(obj):
+    return mdaio.mda_from_bytes(MLUtils.loadFile(obj))
