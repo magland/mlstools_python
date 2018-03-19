@@ -18,8 +18,7 @@ class MLStudy:
     _docstor_url='https://docstor1.herokuapp.com'
     def __init__(self,id='',path=''):
         self._study={}
-        if id:
-            self.load(id=id,path=path)
+        self.load(id=id,path=path)
     def setDocStorUrl(self,url):
         self._docstor_url=url
     def load(self,id='',path=''):
