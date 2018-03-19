@@ -1,6 +1,7 @@
 import numpy
 import requests
 import json
+import os
 from . import mdaio
 
 class MLStudyScript:
@@ -47,9 +48,30 @@ class MLStudy:
 
 def loadFile(obj):
     if 'prv' in obj:
-        url='https://kbucket.flatironinstitute.org/download/'+obj['prv']['original_checksum']
+        checksum=obj['prv']['original_checksum']
+        return _load_file_from_checksum(checksum)
+    else:
+        return None
+
+def _load_file_from_checksum(checksum):
+    url='https://kbucket.flatironinstitute.org/download/'+checksum
+    if ('KBUCKET_DOWNLOAD_DIRECTORY' in os.environ) and (os.path.isdir(os.environ['KBUCKET_DOWNLOAD_DIRECTORY'])):
+        kbucket_download_directory=os.environ['KBUCKET_DOWNLOAD_DIRECTORY']
+        file_path=os.path.join(kbucket_download_directory,checksum)
+        if not os.path.isfile(file_path):
+            _download_to_file(url,file_path)
+        with open(file_path, "rb") as binary_file:
+            return binary_file.read()
+    else
         req=requests.get(url)
         return req.content
+
+def _download_to_file(url,file_path):
+    import urllib.request
+    tmp_file_name=file_name+'.downloading'
+    urllib.request.urlretrieve(url, tmp_file_name)
+    os.rename(tmp_file_name,file_name)
+    
 
 def loadTextFile(obj):
     return loadFile(obj).decode('utf-8')
