@@ -68,9 +68,9 @@ def _load_file_from_checksum(checksum):
 
 def _download_to_file(url,file_path):
     import urllib.request
-    tmp_file_name=file_name+'.downloading'
+    tmp_file_name=file_path+'.downloading'
     urllib.request.urlretrieve(url, tmp_file_name)
-    os.rename(tmp_file_name,file_name)
+    os.rename(tmp_file_name,file_path)
     
 
 def loadTextFile(obj):
