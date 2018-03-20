@@ -20,15 +20,15 @@ class MLStudyDataset:
         self._object={}
     def setObject(self,obj):
         self._object=obj
-    def fileNames():
+    def fileNames(self):
         return self._object['files'].keys()
-    def loadFile(file_name):
+    def loadFile(self,file_name):
         return loadFile(self._object['files'][file_name])
-    def loadTextFile(file_name):
+    def loadTextFile(self,file_name):
         return loadTextFile(self._object['files'][file_name])
-    def loadJsonFile(file_name):
+    def loadJsonFile(self,file_name):
         return loadJsonFile(self._object['files'][file_name])
-    def loadMdaFile(file_name):
+    def loadMdaFile(self,file_name):
         return loadMdaFile(self._object['files'][file_name])
 
 class MLStudy:
