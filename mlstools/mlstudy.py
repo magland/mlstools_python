@@ -15,6 +15,22 @@ class MLStudyScript:
     def result(self,name):
         return self._results_object[name]['value']
 
+class MLStudyDataset:
+    def __init__(self):
+        self._object={}
+    def setObject(self,obj):
+        self._object=obj
+    def fileNames():
+        return self._object['files'].keys()
+    def loadFile(file_name):
+        return loadFile(self._object['files'][file_name])
+    def loadTextFile(file_name):
+        return loadTextFile(self._object['files'][file_name])
+    def loadJsonFile(file_name):
+        return loadJsonFile(self._object['files'][file_name])
+    def loadMdaFile(file_name):
+        return loadMdaFile(self._object['files'][file_name])
+
 class MLStudy:
     _docstor_url='https://docstor1.herokuapp.com'
     def __init__(self,id='',path=''):
@@ -45,6 +61,10 @@ class MLStudy:
         return X;
     def datasetIds(self):
         return self._study['datasets'].keys()
+    def dataset(self,dataset_id):
+        X=MLStudyDataset()
+        X.setObject(self._study['datasets'][dataset_id])
+        return X;
 
 def loadFile(obj):
     if 'prv' in obj:
