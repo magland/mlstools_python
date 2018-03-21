@@ -105,7 +105,7 @@ class MLProcessor:
 			else:
 				if argname in inames:
 					val=kwargs[argname]
-					if type(val)=='tuple':
+					if type(val)==tuple:
 						for val0 in val:
 							path0=self._get_path_for_input(argname,val0)
 							cmd=cmd+' --{}={}'.format(argname,path0)
@@ -116,7 +116,7 @@ class MLProcessor:
 					pass #for now
 				elif argname in pnames:
 					val=kwargs[argname]
-					if type(val)=='tuple':
+					if type(val)==tuple:
 						for val0 in val:
 							cmd=cmd+' --{}={}'.format(argname,val0)
 					else:
