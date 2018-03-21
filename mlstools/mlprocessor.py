@@ -28,7 +28,7 @@ class MLProcessor:
 		self._mlconfig=None
 	def spec(self):
 		if not self._spec:
-			cmd='mp-spec {} --package_uri={}'.format(self._processor_name,self._package_uri)
+			cmd='mp-spec {} --_package_uri={}'.format(self._processor_name,self._package_uri)
 			output=os.popen(cmd).read()
 			obj=json.loads(output)
 			self._spec=obj
