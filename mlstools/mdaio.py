@@ -301,7 +301,7 @@ def readmda(path):
 def mda_from_bytes(Bytes):
     H=_header_from_bytes(Bytes)
     if (H is None):
-        print ("Problem reading header of: {}".format(path))
+        print ("Problem reading mda header of binary data")
         return None
     ret=np.array([])
     buf=io.BytesIO(Bytes).getbuffer()
