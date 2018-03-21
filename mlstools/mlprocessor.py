@@ -80,12 +80,15 @@ class MLProcessor:
 
 	def _run_command_and_print_output(self,command):
 	    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+	    ct=0
 	    while True:
 	        output = process.stdout.readline()
 	        if (not output) and (process.poll() is not None):
 	            break
 	        if output:
 	            print(output.strip().decode())
+	        ct=ct+1;
+	    print('aaaaaaaaaaaa {}'.format(ct));
 	    rc = process.poll()
 	    return rc
 
@@ -142,7 +145,7 @@ class MLProcessor:
 				path0=self._create_path_for_output(argname,kwargs[argname],process_signature)
 				output_paths[argname]=path0
 				cmd=cmd+' --{}={}'.format(argname,path0)
-		print (cmd)
+		print ('RUNNING:::::: '+cmd)
 		#process = Popen(shlex.split(cmd), stdout=PIPE)
 		#process.communicate()
 		#exit_code = process.wait()
