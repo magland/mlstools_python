@@ -79,16 +79,16 @@ class MLProcessor:
 		raise Exception('Parameter not found in spec: {}'.format(name))
 
 	def _run_command_and_print_output(self,command):
-	    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
-	    ct=0
+	    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	    while True:
-	        output = process.stdout.readline()
-	        if (not output) and (process.poll() is not None):
+	        output = process.stderr.readline()
+	        output2= process.stdout.readline()
+	        if (not output) and (not output2) and (process.poll() is not None):
 	            break
 	        if output:
-	            print(output.strip().decode())
-	        ct=ct+1;
-	    print('aaaaaaaaaaaa {}'.format(ct));
+	            print (output.strip().decode())
+	        if output2:
+	            print (output2.strip().decode())
 	    rc = process.poll()
 	    return rc
 
