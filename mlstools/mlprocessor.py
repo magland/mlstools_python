@@ -78,7 +78,7 @@ class MLProcessor:
 				return MLProcessorPIO(parameter0)
 		raise Exception('Parameter not found in spec: {}'.format(name))
 
-	def _run_command_and_print_output(command):
+	def _run_command_and_print_output(self,command):
 	    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
 	    while True:
 	        output = process.stdout.readline()
@@ -146,7 +146,7 @@ class MLProcessor:
 		#process = Popen(shlex.split(cmd), stdout=PIPE)
 		#process.communicate()
 		#exit_code = process.wait()
-		exit_code = _run_command_and_print_output(cmd)
+		exit_code = self._run_command_and_print_output(cmd)
 		if exit_code != 0:
 			raise Exception('Non-zero exit code for {}'.format(self.name()))
 		ret=Empty()
