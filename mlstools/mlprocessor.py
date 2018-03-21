@@ -104,12 +104,23 @@ class MLProcessor:
 				cmd=cmd+' --{}={}'.format(argname,kwargs[argname])
 			else:
 				if argname in inames:
-					path0=self._get_path_for_input(argname,kwargs[argname])
-					cmd=cmd+' --{}={}'.format(argname,path0)
+					val=kwargs[argname]
+					if type(val)=='tuple':
+						for val0 in val:
+							path0=self._get_path_for_input(argname,val0)
+							cmd=cmd+' --{}={}'.format(argname,path0)
+					else:
+						path0=self._get_path_for_input(argname,val)
+						cmd=cmd+' --{}={}'.format(argname,path0)
 				elif argname in onames:
 					pass #for now
 				elif argname in pnames:
-					cmd=cmd+' --{}={}'.format(argname,str(kwargs[argname]))
+					val=kwargs[argname]
+					if type(val)=='tuple':
+						for val0 in val:
+							cmd=cmd+' --{}={}'.format(argname,val0)
+					else:
+						cmd=cmd+' --{}={}'.format(argname,val)
 				else:
 					raise Exception('Unexpected argument: {}'.format(argname))
 		process_signature=self._get_signature_from_cmd(cmd)
