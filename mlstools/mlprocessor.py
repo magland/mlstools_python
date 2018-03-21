@@ -1,7 +1,7 @@
 import os
 import json
 import shlex
-from subprocess import Popen, PIPE
+import subprocess
 import mlstools as mls
 import hashlib
 
@@ -77,6 +77,18 @@ class MLProcessor:
 			if parameter0['name'] == name:
 				return MLProcessorPIO(parameter0)
 		raise Exception('Parameter not found in spec: {}'.format(name))
+
+	def _run_command_and_print_output(command):
+	    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE)
+	    while True:
+	        output = process.stdout.readline()
+	        if (not output) and (process.poll() is not None):
+	            break
+	        if output:
+	            print(output.strip().decode())
+	    rc = process.poll()
+	    return rc
+
 	def run(self,**kwargs):
 		inames=set(self.inputNames())
 		for iname in inames:
@@ -131,9 +143,10 @@ class MLProcessor:
 				output_paths[argname]=path0
 				cmd=cmd+' --{}={}'.format(argname,path0)
 		print (cmd)
-		process = Popen(shlex.split(cmd), stdout=PIPE)
-		process.communicate()
-		exit_code = process.wait()
+		#process = Popen(shlex.split(cmd), stdout=PIPE)
+		#process.communicate()
+		#exit_code = process.wait()
+		exit_code = _run_command_and_print_output(cmd)
 		if exit_code != 0:
 			raise Exception('Non-zero exit code for {}'.format(self.name()))
 		ret=Empty()
@@ -142,6 +155,8 @@ class MLProcessor:
 				if kwargs[argname]:
 					setattr(ret,argname,output_paths[argname])
 		return ret
+
+
 	def _get_mlconfig(self):
 		if not self._mlconfig:
 			self._mlconfig=json.loads(os.popen('mlconfig print').read())
